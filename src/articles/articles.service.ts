@@ -12,15 +12,25 @@ export class ArticlesService {
   }
 
   findAll() {
-    return this.prisma.article.findMany({ where: { published: true } });
+    return this.prisma.article.findMany({
+      where: {
+        published: true,
+        deletedAt: null,
+      },
+    });
   }
 
   findDrafts() {
-    return this.prisma.article.findMany({ where: { published: false } });
+    return this.prisma.article.findMany({
+      where: {
+        published: false,
+        deletedAt: null,
+      },
+    });
   }
 
   findOne(id: number) {
-    return this.prisma.article.findUnique({ where: { id } });
+    return this.prisma.article.findUnique({ where: { id, deletedAt: null } });
   }
 
   update(id: number, updateArticleDto: UpdateArticleDto) {
@@ -31,6 +41,10 @@ export class ArticlesService {
   }
 
   remove(id: number) {
-    return this.prisma.article.delete({ where: { id } });
+    // return this.prisma.article.delete({ where: { id } });
+    return this.prisma.article.update({
+      where: { id },
+      data: { deletedAt: new Date() },
+    });
   }
 }

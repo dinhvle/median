@@ -27,6 +27,7 @@
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
+Set up postgresql database using `docker-compose.yml` file.
 
 ```bash
 $ npm install
